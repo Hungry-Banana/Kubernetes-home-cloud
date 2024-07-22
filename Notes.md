@@ -1,3 +1,73 @@
+# Diagram
+
+```mermaid
+%%{ init: { 'flowchart': { 'curve': 'cardnial' } } }%%
+flowchart TD
+    subgraph Master["Controle Plane (Master Node)"]
+        APIServer[Kubernetes API Server]
+        etcd[etcd]
+        Controller[Controller Manager]
+        Scheduler[Scheduler]
+    end
+    
+    subgraph Node2["Node 2 (Worker Node)"]
+        KubeProxy2[Kube Proxy]
+        Kubelet2[Kubelet]
+        Pod2[Pod]
+        ContainerRuntime2[Container Runtime]
+        CNIPlugin2[CNI Plugin]
+        Container2[Container]
+        Volume2[Volume]
+        HealthChecks2[Health Checks]
+        Logging2[Logging]
+        Network2[Network Interface]
+        Monitoring2[Monitoring]
+    end
+    
+    subgraph Node1["Node 1 (Worker Node)"]
+        KubeProxy1[Kube Proxy]
+        Kubelet1[Kubelet]
+        Pod1[Pod]
+        ContainerRuntime1[Container Runtime]
+        CNIPlugin1[CNI Plugin] 
+        Container1[Container]
+        Volume1[Volume]
+        HealthChecks1[Health Checks]
+        Logging1[Logging]
+        Network1[Network Interface]
+        Monitoring1[Monitoring]
+    end
+    
+
+    
+    etcd --- APIServer
+    Controller --- APIServer
+    Scheduler --- APIServer
+    Master --- Kubelet1
+    Master --- Kubelet2
+    Master --- KubeProxy1
+    Master --- KubeProxy2
+    Kubelet1 --- Pod1
+    Kubelet1 --- ContainerRuntime1
+    Kubelet1 --- CNIPlugin1
+    Kubelet2 --- Pod2
+    Kubelet2 --- ContainerRuntime2
+    Kubelet2 --- CNIPlugin2
+    Pod1 --- Container1
+    Pod2 --- Container2
+    Container1 --- Volume1
+    Container1 --- HealthChecks1
+    Container1 --- Logging1
+    Container1 --- Network1
+    Container1 --- Monitoring1
+    Container2 --- Volume2
+    Container2 --- HealthChecks2
+    Container2 --- Logging2
+    Container2 --- Network2
+    Container2 --- Monitoring2 
+```
+
+
 # Deployments
 
 In Kubernetes, a Deployment is a higher-level abstraction that manages the lifecycle of applications running on a cluster. It provides declarative updates to applications, ensures desired state management, and allows for easy scaling, rolling updates, and rollback capabilities. Deployments are one of the most commonly used resources in Kubernetes to manage stateless applications.
