@@ -7,7 +7,12 @@ metadata:
     #nginx.ingress.kubernetes.io/affinity: "cookie"
     #nginx.ingress.kubernetes.io/session-cookie-path: "/"
     #nginx.ingress.kubernetes.io/service-upstream: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  tls:
+  - hosts:
+    - grafana.example
+    secretName: testsecret-tls
   ingressClassName: nginx
   rules:
     - host: grafana.example
